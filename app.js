@@ -1,6 +1,7 @@
 
 var express 		= require('express');
 var app 			= express();
+var jade 			= require('jade');
 var bodyParser     	= require('body-parser');
 var methodOverride 	= require('method-override');
 var phantom 		= require('phantom');
@@ -69,29 +70,33 @@ app.route('/api/clients')
 	//Save it to the db ( mongo )
 	invoice.save(function (err, invoice) {
 		if (err) return console.error(err);
-	  	var page, file = '/tmp/paulisawesome.pdf';
+	  	var html, page, templatePath, file = '/tmp/paulisawesome.pdf';
 
 	  	console.log('Creating Invoice');
 		phantom.create(function (ph){
 			ph.createPage(function(_page){
 				page = _page;
-				page.set('content', '<html><head><style>body{ color: #000; }</style></head>im some test html.</html>');
-				page.set('paperSize', { format: 'A4' });
-				page.render(file, function(){
-					console.log('rending page');
-					ph.exit();
+				app.render('pdf', {'data': invoice }, function(err, html){
+					page.set('content', html);
+					page.set('paperSize', { format: 'A4' });
+
+					page.render(file, function(){
+						console.log('rending page');
+
+						console.log('donwloading file');
+					  	res.download('/tmp/paulisawesome.pdf', '/tmp/paulisawesome.pdf', function(err){
+						  if (err) {
+						    console.log('error');
+						    console.log(err);
+						  } else {
+						    console.log('invoice downloading');
+						  }
+						});
+
+						ph.exit();
+					});
 				});
 			});
-		});
-
-		console.log('donwloading file');
-	  	res.download('/tmp/paulisawesome.pdf', '/tmp/paulisawesome.pdf', function(err){
-		  if (err) {
-		    console.log('error');
-		    console.log(err);
-		  } else {
-		    console.log('invoice downloading');
-		  }
 		});
 	});
 });
