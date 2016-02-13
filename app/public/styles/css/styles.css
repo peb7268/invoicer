@@ -1,0 +1,40 @@
+
+.success {
+	color: green;
+}
+
+#invoiceForm {
+	width: 40%;
+	margin: 70px auto 0;
+}
+#invoiceForm form input {
+	display: block;
+	width: 100%;
+	border: 1px solid #ccc;
+	margin: 0 0 5px;
+	padding: 4px 7px;
+	border-radius: 2px;
+	font-size: 14pt;
+	box-sizing: border-box;
+}
+
+#invoiceForm form input[type="submit"]{
+	background: #1A96C6;
+	border: 1px solid #03749F;
+	color: #fff;
+	padding: 4px 10px;
+	margin: initial;
+	display: block;
+	width: 100%;
+}
+#invoiceForm form input[type="submit"]:hover {
+	background: #21C1FF;
+	cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+	 font-size: 14px;
+	 color: #555;
+	 -webkit-font-smoothing: antialiased;
+	 line-height: 1.7;
+}

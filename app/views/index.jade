@@ -1,0 +1,19 @@
+extends ./layouts/master.jade
+
+block head
+	link(type='text/css', href='../public/styles/css/styles.css', rel='stylesheet')
+	title Invoicer
+block content
+	#invoiceForm
+		h2 Invoicer
+		form(method='post', action='api/clients')
+			input(type='text', 	 name='client_name', placeholder='Client Name')
+			input(type='text', 	 name='client_address', placeholder='Address')
+			input(type='text', 	 name='sq_foot', placeholder='Sq. Footage')
+			input(type='text', 	 name='num_rooms', placeholder='# Rooms')
+
+			input(type='submit', name='Generate', value='Generate')
+
+block js
+	script(src='../public/js/vendors/jquery/dist/jquery.min.js')
+	script(src='../public/js/main.js')
